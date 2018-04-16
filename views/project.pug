@@ -1,0 +1,36 @@
+extends layout
+
+block content
+  nav.navbar.is-transparent
+    .navbar-brand
+      a.navbar-item(href='/') Audio DB
+
+    .navbar-menu
+      .navbar-end
+        .navbar-item.has-dropdown.is-hoverable
+          a.navbar-link= currentProject.name
+            .navbar-dropdown.is-boxed
+              each project in projects
+                if (project.name != currentProject.name && !project.isDeleted)
+                  a(href='/p/'+project.name +'/' + project._id).navbar-item.is-hoverable= project.name
+
+
+
+  .song-form
+    h2.subtitle.is-3
+    .columns
+      .column.is-one-third
+        .field.has-addons
+          .control
+            input#name-input.input(type='text', name='name', placeholder='New Song')
+          .control
+            button.button.is-primary(onclick='createSong(this)', data-parentid= currentProject._id) Add
+        hr
+        table.table
+          each song in songs
+            tr
+              td: a(href='/p/' + song.title+ '/' + song._id)= song.title
+              td
+                textarea.textarea(rows=1)= song.description
+              td
+                a.delete
