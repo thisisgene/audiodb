@@ -2,10 +2,25 @@ doctype html
 html
   head
     title= title
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+
+    meta(name='description', content='Audio DB')
+    meta(name='keywords', content='')
+    meta(name='viewport', content='width=device-width')
+
+    link(href='https://fonts.googleapis.com/icon?family=Material+Icons', rel='stylesheet')
+
     link(rel='stylesheet', href='/css/bulma.min.css')
     link(rel='stylesheet', href='/css/style.css')
+    link(rel='stylesheet', href='/css/custom.css')
   body
     block content
 
     script(src='/js/jquery-3.2.1.min.js')
+    script(src='/js/soundcloud-api.js')
     script(src='/js/script.js')
+    script#__bs_script__.
+      //<![CDATA[
+      document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.18.13'><\/script>".replace("HOST", location.hostname));
+      //]]>

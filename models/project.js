@@ -4,6 +4,8 @@ var SongSchema = new mongoose.Schema();
 SongSchema.add({
   title           : String,
   description     : String,
+  lyrics          : String,
+  tracks          : [String],
   parentId        : String,
   idDeleted       : Boolean
 });
