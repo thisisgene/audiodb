@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require( 'mongoose' );
+const Note= mongoose.model( 'Note' );
 const Song = mongoose.model( 'Song' );
 const Project  = mongoose.model( 'Project' );
 
@@ -17,6 +18,8 @@ router.get('/', async function(req, res, next) {
   });
 });
 
+/////////////////////////////////////////////////////////////// PROJECTS
+
 router.post('/create_project', function(req, res) {
   let name = req.body.name;
   let project = new Project({
@@ -28,6 +31,7 @@ router.post('/create_project', function(req, res) {
     }
   })
 });
+
 
 router.get('/p/*/:id', async function(req, res) {
   let id = req.params.id;
@@ -53,6 +57,8 @@ router.get('/delete_project/:id', async function(req, res) {
   })
 });
 
+/////////////////////////////////////////////////////////////// SONG VIEW
+
 router.post('/create_song', function(req, res) {
   let body = req.body;
   let parentId = body.parentId;
@@ -73,30 +79,51 @@ router.get('/s/*/:id', async function(req, res) {
   let id = req.params.id;
   let projects = await fetchProjects({});
   let currentSong = await Song.findById(id);
-  console.log(currentSong.parentId);
-  let parent = await Project.findById(currentSong.parentId);
-  let songs = await Song.find({parentId: currentSong.parentId});
-  console.log(parent);
+  let parentId = currentSong.parentId;
+  let parent = await Project.findById(parentId);
+  let songs = await Song.find({parentId: parentId});
+  let notes = await Note.find({parentId: id});
+  console.log(parentId);
   res.render('song', {
     projects: projects,
     currentSong: currentSong,
     parent: parent,
-    songs: songs
+    songs: songs,
+    notes: notes
   });
 
 });
 
+/////////////////////////////////////////////////////////////// LYRICS
 
-router.post('/save_lyrics', async function(req, res) {
+router.post('/save_text', async function(req, res) {
   let body = req.body;
   let song = await Song.findById(body.songid);
-  song.lyrics = body.text;
-  song.save(function(err) {
-    if (!err) {
-      res.send('success');
-    }
-  })
+  let type = body.type;
+  switch (type) {
+    case 'lyrics':
+      song.lyrics = body.text;
+      song.save(function(err) {
+        if (!err) {
+          res.send('success');
+        }
+      });
+      break;
+    case 'notes':
+      let note = await Note.findById(body.noteId);
+      note.content = body.text;
+      note.save(function(err){
+        if (!err) {
+          res.send('success');
+        }
+      });
+      break;
+  }
+
 });
+
+
+/////////////////////////////////////////////////////////////// AUDIO TRACKS
 
 router.post('/add_track', async function(req, res) {
   let body = req.body;
@@ -132,6 +159,42 @@ router.get('/remove_track/:id/:track', async function(req, res) {
       }
     }
   }
+});
+
+////////////////////////////////////////////////////////////// NOTES
+
+
+async function noteExists(song, title) {
+  let notes = song.notes;
+  for (let note of notes) {
+
+    if (note.title == title) {
+      return true;
+    }
+  }
+  return(false);
+}
+
+router.post('/new_note', async function(req, res) {
+  let body = req.body;
+  let id = body.id;
+  let title = body.title;
+
+
+  let note = new Note ({
+    title:  title,
+    parentId: id
+  });
+  note.save(function(err){
+    if (!err) {
+      res.send('success');
+    }
+  })
+});
+
+router.get('/change_tab/:id', async function(req, res) {
+  let note = await Note.findById(req.params.id);
+  res.send(note.content);
 });
 
 module.exports = router;

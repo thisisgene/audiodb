@@ -47,21 +47,40 @@ block content
                   .control
                     button.button.is-small(onclick='addTrack()') Add
               article.tile.is-child.notification
-                .tabs.is-fullwidth
+                .tabs.is-toggle.is-fullwidth
                   ul
-                    li.is-active
-                      a Pictures
-                    li
-                      a Music
-                    li
-                      a Videos
-                    li
-                      a Documents
-                    li.add-tab
-                      a: i.is-small.material-icons add_circle_outline
+                    -var index = 1
+                    -var firstNote = ''
+                    if notes
+                      each note in notes
+                        if index==1
+                          -firstNote = note
+                        li(class=index==1?'is-active':'')
+                          a(data-noteid=note._id).note-link= note.title
+                        -index++
+                    li.add-note
+                      .field
+                        .control
+                          button.button.is-small(onclick='addNote()') +
+                #new-note-msg.modal
+                  .modal-background
+                  .modal-content
+                    .new-note-container
+                      .field
+                        label.label.is-small Note title
+                        .control
+                          input#note-title.input.is-small(type='text')
+
+                      .field.is-grouped.is-grouped-centered
+                        .control
+                          a.button.is-primary.is-small(onclick='saveNote()') Save
+                        .control
+                          a.button.is-light.is-small(onclick='closeModal()') Cancel
+                  button.modal-close.is-large(aria-label='close', onclick='closeModal()')
+
 
                 .note-container
-                  textarea.textarea.is-fullwidth(rows=8)
+                  textarea#note-content.textarea.is-fullwidth(rows=8, data-thisnote=firstNote._id)= firstNote.content
 
 
           .tile.is-parent

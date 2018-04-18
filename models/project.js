@@ -1,17 +1,25 @@
-var mongoose = require('mongoose');
+let mongoose = require('mongoose');
 
-var SongSchema = new mongoose.Schema();
+let NoteSchema = new mongoose.Schema();
+NoteSchema.add({
+  title:      String,
+  content:    String,
+  parentId:   String
+});
+
+let SongSchema = new mongoose.Schema();
 SongSchema.add({
   title           : String,
   description     : String,
   lyrics          : String,
   tracks          : [String],
+  notes           : [NoteSchema],
   parentId        : String,
   idDeleted       : Boolean
 });
 
 
-var ProjectSchema = new mongoose.Schema();
+let ProjectSchema = new mongoose.Schema();
 ProjectSchema.add({
 
   name            : String,
@@ -23,8 +31,9 @@ ProjectSchema.add({
 
 // ProjectSchema.add({ subProjects: [ProjectSchema] });
 
-var Song = mongoose.model('Song', SongSchema);
-var Project = mongoose.model('Project', ProjectSchema);
+let Note = mongoose.model('Note', NoteSchema);
+let Song = mongoose.model('Song', SongSchema);
+let Project = mongoose.model('Project', ProjectSchema);
 
 mongoose.connect('mongodb://admin:audio2018ed@localhost/audiodb');
 

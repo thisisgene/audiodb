@@ -6,11 +6,7 @@ let delay = (function(){
   };
 })();
 
-$(document).ready(function() {
-
-});
-
-$('#lyrics').on('keyup', function(e) {
+function saveTextWhileTyping(e, type, note = '') {
   delay(function(){
     let $this = $(e.target);
     let songid = $('#song-container').data('songid');
@@ -18,10 +14,13 @@ $('#lyrics').on('keyup', function(e) {
     let text = $this.val();
     let body = {
       songid: songid,
-      text: text
+      text: text,
+      type: type,
+      noteId: note
     };
+    console.log(text);
     $parent.addClass('is-loading');
-    $.post('/save_lyrics', body, function(msg) {
+    $.post('/save_text', body, function(msg) {
       if (msg=="success") {
         $parent.removeClass('is-loading');
         $this.addClass('is-success');
@@ -31,7 +30,36 @@ $('#lyrics').on('keyup', function(e) {
       }
     })
   }, 1000 );
+}
+
+$('#lyrics').on('keyup', function(e) {
+  saveTextWhileTyping(e, 'lyrics');
+
 });
+$('#note-content').on('keyup', function(e) {
+  let note = $(e.target).data('thisnote');
+  saveTextWhileTyping(e, 'notes', note);
+
+});
+
+$('.note-link').on('click', function(e) {
+  let $link = $(e.target);
+  let $li = $link.parent();
+  let id = $link.data('noteid');
+  let $content = $('#note-content');
+  $.get('/change_tab/'+id, function(content){
+    console.log(content);
+    $content.val(content);
+    $content.data('thisnote', id);
+    console.log($content.data('thisnote'));
+    $li.siblings('.is-active').removeClass('is-active');
+    $li.addClass('is-active');
+  });
+});
+
+function closeModal() {
+  $('.modal').removeClass('is-active');
+}
 
 function createProject() {
   let name = $('#name-input').val();
@@ -82,4 +110,27 @@ function deleteTrack(track) {
       location.reload()
     }
   })
+}
+
+function addNote() {
+  $('#new-note-msg').addClass('is-active');
+  $('#note-title').focus();
+}
+
+function saveNote() {
+  let title = $('#note-title').val();
+  let id = $('#song-container').data('songid');
+  if (title != '') {
+    console.log(title);
+    let body = {
+      id: id,
+      title: title
+    };
+    $.post('/new_note', body, function(msg) {
+      console.log(msg);
+      if (msg='success') {
+        location.reload();
+      }
+    })
+  }
 }
