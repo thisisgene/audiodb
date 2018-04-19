@@ -26,6 +26,7 @@ block content
 
   .dropzone-container
     form#dropzone.dropzone(action='/file_upload')
+      input.hidden-input(name='song_id', value=currentSong._id)
     #file-msg.modal
       .modal-background
       .modal-content
@@ -56,17 +57,13 @@ block content
             .tile.is-parent.is-vertical.is-6
               article.tile.is-child.notification
                 p.subtitle Audio
-                each track in currentSong.tracks
-                  .sc-container(id=track)
+                  each track in audio
+                    .tracktitle: p= track.title
+                    br
+                    audio(controls)
+                      source(src='/uploads/'+track.filename)
 
 
-
-                    a(onclick='deleteTrack("'+track+'")').delete
-                .field.has-addons
-                  .control
-                    input#audio-input.input.is-small(type='text', name='track', placeholder='New SC trackID')
-                  .control
-                    button.button.is-small(onclick='addTrack()') Add
               article.tile.is-child.notification
                 .tabs.is-toggle.is-fullwidth
                   ul
@@ -107,5 +104,8 @@ block content
           .tile.is-parent
             article.tile.is-child.notification
               p.subtitle Images
-              .content
+              .image-container.content
+                each image in images
+
+                  img(src='/uploads/'+image.filename)
 

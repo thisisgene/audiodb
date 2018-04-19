@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const fs = require('fs');
 const multer = require('multer');
 const upload = multer({ dest: 'public/uploads/' });
 const mongoose = require( 'mongoose' );
-const Note= mongoose.model( 'Note' );
+const Audio = mongoose.model( 'Audio' );
+const Note = mongoose.model( 'Note' );
+const Image = mongoose.model( 'Image' );
 const Song = mongoose.model( 'Song' );
 const Project  = mongoose.model( 'Project' );
 
@@ -84,14 +87,18 @@ router.get('/s/*/:id', async function(req, res) {
   let parentId = currentSong.parentId;
   let parent = await Project.findById(parentId);
   let songs = await Song.find({parentId: parentId});
+  let audio = await Audio.find({parentId: id});
   let notes = await Note.find({parentId: id});
+  let images = await Image.find({parentId: id});
   console.log(parentId);
   res.render('song', {
     projects: projects,
     currentSong: currentSong,
     parent: parent,
     songs: songs,
-    notes: notes
+    audio: audio,
+    notes: notes,
+    images: images
   });
 
 });
@@ -100,19 +107,41 @@ router.get('/s/*/:id', async function(req, res) {
 
 router.post('/file_upload', upload.single('file'), async function(req, res) {
   let file = req.file;
+  let id = req.body.song_id;
+  let song = await Song.findById(id);
   let mimetype = file.mimetype;
   mimetype = mimetype.substring(0, mimetype.indexOf('/'));
-  console.log(mimetype);
 
   switch(mimetype) {
     case 'text':
       res.send('text');
       break;
     case 'audio':
-      res.send('audio');
+
+      let audio = new Audio({
+        title: file.originalname,
+        filename: file.filename,
+        parentId: id
+      });
+      audio.save(function(err) {
+        if (!err) {
+          res.send('audio');
+
+        }
+      });
       break;
     case 'image':
-      res.send('image');
+      let image = new Image({
+        title: file.originalname,
+        filename: file.filename,
+        parentId: id
+      });
+      image.save(function(err) {
+        if (!err) {
+          res.send('image');
+
+        }
+      });
       break;
     default:
       res.send('Not like that!');

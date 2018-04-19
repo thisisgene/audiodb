@@ -20,7 +20,6 @@ h1 {
   border: 4px dashed rgba(0, 0, 0, 0.4);
   border-radius: 1rem;
   box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.4);
-  display: flex;
   justify-content: center;
   align-items: center;
   font-size: 3rem;
@@ -74,5 +73,17 @@ h1 {
   width: 14rem;
   border-radius: 3px;
   text-align: center; }
+
+.image-container {
+  line-height: 0;
+  -webkit-column-count: 5;
+  -webkit-column-gap: 0px;
+  -moz-column-count: 5;
+  -moz-column-gap: 0px;
+  column-count: 5;
+  column-gap: 0px; }
+  .image-container .image img {
+    width: 100% !important;
+    height: auto !important; }
 
 /*# sourceMappingURL=custom.css.map */
