@@ -4,11 +4,13 @@ block content
   nav.navbar.is-transparent
     .navbar-brand
       a.navbar-item(href='/') Audio DB
+      .navbar-item
+        p.subtitle.is-3= currentSong.title
 
     .navbar-menu
       .navbar-end
         .navbar-item.has-dropdown.is-hoverable
-          a.current-song.title.navbar-link= currentSong.title
+          a.current-song.navbar-link= currentSong.title
           .navbar-dropdown.is-boxed
             each song in songs
               if (song.title != currentSong.title && !song.isDeleted)
@@ -22,24 +24,43 @@ block content
               if (project.name != parent.name && !project.isDeleted)
                 a(href='/p/'+project.name +'/' + project._id).navbar-item.is-hoverable= project.name
 
+  .dropzone-container
+    form#dropzone.dropzone(action='/file_upload')
+    #file-msg.modal
+      .modal-background
+      .modal-content
+        .new-note-container
+          .field
+            label.label.is-small Note title
+            .control
+
+          .field.is-grouped.is-grouped-centered
+            .control
+              a.button.is-primary.is-small(onclick='saveNote()') Save
+            .control
+              a.button.is-light.is-small(onclick='closeModal()') Cancel
+      button.modal-close.is-large(aria-label='close', onclick='closeModal()')
+
+
   #song-container(data-songid=currentSong._id).main-container
     //h1.subtitle.is-2= currentSong.title
     .main-container
       .tile.is-ancestor
         .tile.is-vertical.is-12
           .tile
-            .tile.is-parent.is-5
+            .tile.is-parent.is-6
               article.tile.is-child.notification
                 p.subtitle Lyrics
                 .control
                   textarea#lyrics.textarea(rows=18)= currentSong.lyrics
-            .tile.is-parent.is-vertical.is-7
+            .tile.is-parent.is-vertical.is-6
               article.tile.is-child.notification
                 p.subtitle Audio
                 each track in currentSong.tracks
                   .sc-container(id=track)
 
-                    iframe(width='100%', height='80', scrolling='no', frameborder='no', allow='autoplay', src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/' + track + '%3Fsecret_token%3Ds-RyZe8&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=false')
+
+
                     a(onclick='deleteTrack("'+track+'")').delete
                 .field.has-addons
                   .control
@@ -87,25 +108,4 @@ block content
             article.tile.is-child.notification
               p.subtitle Images
               .content
-              // Content
-      //.tile.is-parent
-        //article.tile.is-child.notification.is-success
-        //  .content
-        //    p.title Tall tile
-        //    p.subtitle With even more content
-        //    .content
-        //      // Content
 
-
-
-    //.tile.is-vertical.is-8
-    //  .tile.is-parent
-    //    .left-container.tile.is-child.is-one-third
-    //      .subtitle.is-4 Lyrics
-    //      .control
-    //        textarea#lyrics.textarea(rows=14)= currentSong.lyrics
-    //  .right-container.tile
-    //    .audio-container
-    //      .subtitle.is-4 Audio
-    //    .img-container
-    //      .subtitle.is-4 Images

@@ -3,21 +3,22 @@ extends layout
 block content
   h1.subtitle.is-2= title
 
-  .columns
-    .list-container.column.is-one-third
-      .field.has-addons
-        .control
-          input#name-input.input(type='text', name='name', placeholder='New Project')
-        .control
-          button.button.is-primary(onclick='createProject()') Add
-      hr
-      table.table
-        each project in projects
-          if (!project.isDeleted)
-            tr
-              td: a(href='/p/'+project.name+'/'+project._id)= project.name
-              td
-                a(href='/delete_project/' + project._id).delete
+  .index-container
+    .columns
+      .list-container.column.is-one-third
+        .field.has-addons
+          .control
+            input#name-input.input(type='text', name='name', placeholder='New Project')
+          .control
+            button.button.is-primary(onclick='createProject()') Add
+        hr
+        table.table
+          each project in projects
+            if (!project.isDeleted)
+              tr
+                td: a(href='/p/'+project.name+'/'+project._id)= project.name
+                td
+                  a(href='/delete_project/' + project._id).delete
 
 
   //.table-container

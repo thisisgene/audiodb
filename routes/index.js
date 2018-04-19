@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
+const upload = multer({ dest: 'public/uploads/' });
 const mongoose = require( 'mongoose' );
 const Note= mongoose.model( 'Note' );
 const Song = mongoose.model( 'Song' );
@@ -92,6 +94,29 @@ router.get('/s/*/:id', async function(req, res) {
     notes: notes
   });
 
+});
+
+/////////////////////////////////////////////////////////////// FILE UPLOAD
+
+router.post('/file_upload', upload.single('file'), async function(req, res) {
+  let file = req.file;
+  let mimetype = file.mimetype;
+  mimetype = mimetype.substring(0, mimetype.indexOf('/'));
+  console.log(mimetype);
+
+  switch(mimetype) {
+    case 'text':
+      res.send('text');
+      break;
+    case 'audio':
+      res.send('audio');
+      break;
+    case 'image':
+      res.send('image');
+      break;
+    default:
+      res.send('Not like that!');
+  }
 });
 
 /////////////////////////////////////////////////////////////// LYRICS

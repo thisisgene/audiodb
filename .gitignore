@@ -89,3 +89,8 @@ typings/
 # next.js build output
 .next
 
+/public/uploads/
+.idea/inspectionProfiles/
+public/css/dropzone.min.css
+public/img/
+public/js/dropzone.js
