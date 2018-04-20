@@ -51,17 +51,19 @@ block content
           .tile
             .tile.is-parent.is-6
               article.tile.is-child.notification
-                p.subtitle Lyrics
+                p.subtitle LYRICS
                 .control
                   textarea#lyrics.textarea(rows=18)= currentSong.lyrics
             .tile.is-parent.is-vertical.is-6
               article.tile.is-child.notification
-                p.subtitle Audio
+                p.subtitle AUDIO
+                ul.track-list
                   each track in audio
-                    .tracktitle: p= track.title
-                    br
-                    audio(controls)
-                      source(src='/uploads/'+track.filename)
+                    li.track-container
+                      .tracktitle: span= track.title
+                      .audio-container
+                        audio(controls)
+                          source(src='/uploads/'+track.filename)
 
 
               article.tile.is-child.notification
@@ -103,7 +105,7 @@ block content
 
           .tile.is-parent
             article.tile.is-child.notification
-              p.subtitle Images
+              p.subtitle IMAGES
               .image-container.content
                 each image in images
 
