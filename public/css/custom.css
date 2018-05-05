@@ -101,54 +101,52 @@ h1 {
   border-radius: 3px;
   text-align: center; }
 
-.instrument-wrapper {
-  display: flex;
-  flex-direction: row; }
-  .instrument-wrapper .subtitle {
-    margin: 0 !important; }
-  .instrument-wrapper .instrument-list {
-    list-style: none;
-    margin: 0 0 0 2rem !important; }
-    .instrument-wrapper .instrument-list li {
+.instrument-wrapper .subtitle {
+  margin: 0 !important; }
+
+.instrument-container .instrument-list {
+  list-style: none;
+  margin: 0 0 0 2rem !important; }
+  .instrument-container .instrument-list li {
+    display: inline-block;
+    margin: 0.3rem 0.5rem;
+    padding: 4px 6px;
+    background: #73CCF8;
+    border-radius: 6px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+    color: white;
+    font-weight: 800;
+    cursor: pointer;
+    box-sizing: border-box; }
+    .instrument-container .instrument-list li:hover {
+      background: #82d1f9; }
+    .instrument-container .instrument-list li.has-note:after {
+      margin-left: 4px;
+      filter: drop-shadow(0 0 1px #054767);
+      background-image: url("../img/has_note_bubble.png");
+      background-size: 16px 16px;
+      background-repeat: no-repeat;
       display: inline-block;
-      margin: 0 0.5rem;
-      padding: 4px 6px;
-      background: #73CCF8;
-      border-radius: 6px;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
-      color: white;
-      font-weight: 800;
-      cursor: pointer;
-      box-sizing: border-box; }
-      .instrument-wrapper .instrument-list li:hover {
-        background: #82d1f9; }
-      .instrument-wrapper .instrument-list li.has-note:after {
-        margin-left: 4px;
-        filter: drop-shadow(0 0 1px #054767);
-        background-image: url("../img/has_note_bubble.png");
-        background-size: 16px 16px;
-        background-repeat: no-repeat;
-        display: inline-block;
-        width: 16px;
-        height: 13px;
-        content: ""; }
-      .instrument-wrapper .instrument-list li.inst-done {
-        background: #fff;
-        color: #555;
-        position: relative;
-        box-shadow: inset 0 0 10px #18F158; }
-        .instrument-wrapper .instrument-list li.inst-done:before {
-          position: absolute;
-          z-index: 5;
-          opacity: 0.8;
-          top: -10px;
-          right: -14px;
-          content: url("../img/check_circle.png");
-          filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.5)); }
-      .instrument-wrapper .instrument-list li.inst-disabled {
-        color: #F3F4F5;
-        background: #D0D5D7;
-        box-shadow: inset 0 0 0px rgba(0, 0, 0, 0.4); }
+      width: 16px;
+      height: 13px;
+      content: ""; }
+    .instrument-container .instrument-list li.inst-done {
+      background: #fff;
+      color: #555;
+      position: relative;
+      box-shadow: inset 0 0 10px #18F158; }
+      .instrument-container .instrument-list li.inst-done:before {
+        position: absolute;
+        z-index: 5;
+        opacity: 0.8;
+        top: -10px;
+        right: -14px;
+        content: url("../img/check_circle.png");
+        filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.5)); }
+    .instrument-container .instrument-list li.inst-disabled {
+      color: #F3F4F5;
+      background: #D0D5D7;
+      box-shadow: inset 0 0 0px rgba(0, 0, 0, 0.4); }
 
 .image-container {
   line-height: 0;
