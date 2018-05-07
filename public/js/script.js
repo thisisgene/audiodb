@@ -75,7 +75,6 @@ function saveTextWhileTyping(e, type, note = '') {
       type: type,
       noteId: note
     };
-    console.log(text);
     $parent.addClass('is-loading');
     $.post('/save_text', body, function(msg) {
       if (msg=="success") {
@@ -105,10 +104,8 @@ $('.note-link').on('click', function(e) {
   let id = $link.data('noteid');
   let $content = $('#note-content');
   $.get('/change_tab/'+id, function(content){
-    console.log(content);
     $content.val(content);
     $content.data('thisnote', id);
-    console.log($content.data('thisnote'));
     $li.siblings('.is-active').removeClass('is-active');
     $li.addClass('is-active');
   });
@@ -123,7 +120,6 @@ function createProject() {
   if (name!='') {
     $.post('/create_project', {name: name}, function(msg) {
       if (msg=='success') {
-        console.log(msg);
       }
     });
   }
@@ -138,7 +134,6 @@ function createSong(obj) {
   };
   $.post('/create_song', body, function(msg) {
     if (msg=='success') {
-      console.log(msg);
     }
   })
 }
@@ -160,7 +155,6 @@ function addTrack() {
 }
 
 function deleteTrack(track) {
-  console.log(track);
   let id = $('#song-container').data('songid');
   $.get('/remove_track/' +id + '/' + track, function(msg) {
     if (msg=='success') {
@@ -178,13 +172,11 @@ function saveNote() {
   let title = $('#note-title').val();
   let id = $('#song-container').data('songid');
   if (title != '') {
-    console.log(title);
     let body = {
       id: id,
       title: title
     };
     $.post('/new_note', body, function(msg) {
-      console.log(msg);
       if (msg='success') {
         location.reload();
       }

@@ -19,14 +19,14 @@ block content
   .song-form
     h2.subtitle.is-3
     .columns
-      .column.is-one-third
+      .column.is-one-third.list-container
         .field.has-addons
           .control
             input#name-input.input(type='text', name='name', placeholder='New Song')
           .control
             button.button.is-primary(onclick='createSong(this)', data-parentid= currentProject._id) Add
         hr
-  table.table.is-fullwidth
+  table.table.is-fullwidth.song-table
     each song in songs
       tr
         td: a(href='/s/' +currentProject.name + '/' + song.title+ '/' + song._id)= song.title

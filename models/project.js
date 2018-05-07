@@ -1,5 +1,10 @@
 let mongoose = require('mongoose');
 
+let TagSchema = new mongoose.Schema();
+TagSchema.add({
+  name:       String
+});
+
 let AudioSchema = new mongoose.Schema();
 AudioSchema.add({
   title:      String,

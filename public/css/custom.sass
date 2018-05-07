@@ -1,18 +1,58 @@
-@import url('https://fonts.googleapis.com/css?family=Gugi|Nunito:700|Roboto+Condensed:300,400')
+@import url('https://fonts.googleapis.com/css?family=Nunito:700|Roboto+Condensed:300,400|PT+Sans:300,400')
 
-body
-  background:  #888
+$background-color: #004B47
+$tile-background-color: rgba(#EAEAEA, .17)
+$lighter-background-color: rgba(#FFF, .9)
+$darker-background-color: rgba(#000, .14)
+
+html, body
+  background:  $background-color
   font:
-    family: 'Roboto Condensed', sans-serif
+    family: 'PT Sans', sans-serif
     size: 16px
     weight: 100
+
+hr
+  height: 2px
+  width: 100%
+  border: none
+  background: $tile-background-color
+
+input[type='text']
+  background: $tile-background-color
+  color: #eee
+  &::placeholder
+    color: #888
 .index-container
   width: 100vw
+.list-container
+  margin: 0 auto
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+
+  table
+    background: $tile-background-color
+
+    tr
+      background: $tile-background-color
+      a
+        color: #eee
 
 
+.song-table
+  background: $tile-background-color
+  tbody tr
+    background: $tile-background-color
+    //border: 1px solid #222 !important
+    td
+      vertical-align: middle !important
+      a
+        color: #eee !important
 .navbar
   margin-bottom: 1rem
-  background: #444
+  background: #222
   *
     color: #fff
 
@@ -21,6 +61,7 @@ h1
 
 .title, .subtitle
   font-family: 'Nunito', sans-serif
+  color: #eee !important
 
 
 .dropzone
@@ -50,21 +91,23 @@ h1
   &.is-parent
     padding: .4rem
   &.is-child
-    background: #DEFCFD
+    background: $tile-background-color
+    padding: 1rem
     //background: #eee
     //border: 1px solid #bbb
-    box-shadow: 0 6px 0 rgba(black, .3)
+    //box-shadow: 0 6px 0 rgba(black, .3)
 
 .tile.is-vertical>.tile.is-child:not(:last-child)
   margin-bottom: .8rem !important
 
 .textarea
   resize: none
-  color: #555
-  background: lighten(#fffdf5, 10%)
+  color: #111
+  background: $lighter-background-color
+  border: none
   border-radius: 0
-  box-shadow: inset 0 0 3px rgba(black, .3)
-  font-family: 'Roboto Condensed', sans-serif
+  box-shadow: none
+  font-family: 'PT Sans', sans-serif
 
 .track-list
 
@@ -78,7 +121,7 @@ h1
     align-items: center
     height: 40px
     color: #fff
-    background: #444
+    background: $tile-background-color
 
     .track-title
       display: flex
@@ -94,16 +137,48 @@ h1
       align-self: flex-end
 
 
+.note-wrapper
+  .tabs
+    color: #eee
+    margin: 0
+    ul li
+      &:not(:first-child)
+        margin-left: 1px
+      &.is-active a
+        background: $lighter-background-color
+        color: #444
+        font-weight: bold
+        border-top: 2px solid transparent
+        //box-sizing: border-box
+      a
+        border: none
+        background: $darker-background-color
+        border-radius: 0 !important
+
 .notification a:not(.button)
   text-decoration: none
 
 .add-note
   margin: 0
-  padding: .2rem .5rem
-  width: 90px
-  border: 1px solid #ddd
-  border-top-right-radius: 6px
-  border-bottom-right-radius: 6px
+  padding: 0 0 0 4px
+  //width: 40px
+  //border: 1px solid #ddd
+  //border-top-right-radius: 6px
+  //border-bottom-right-radius: 6px
+
+  button
+    padding: 0
+    width: 28px
+    height: 28px
+    box-sizing: border-box
+    background: darken($tile-background-color, 35%)
+    border: none
+    border-radius: 0 !important
+    color: #eee
+    font-size: .7rem !important
+    font-weight: bold
+    &:hover
+      background: rgba(#fefefe, .4)
 
   input
     display: none
@@ -128,13 +203,15 @@ h1
     margin: 0 0 0 2rem !important
     li
       display: inline-block
-      margin: .3rem .5rem
+      margin: .3rem .3rem
       padding: 4px 6px
       background: #73CCF8
       border-radius: 6px
-      box-shadow: 0 1px 2px rgba(black, .6)
+      //box-shadow: 0 1px 2px rgba(black, .6)
       color: white
-      font-weight: 800
+      font:
+        size: .8rem
+        weight: 800
       cursor: pointer
       box-sizing: border-box
       &:hover
@@ -155,7 +232,7 @@ h1
         background: #fff
         color: #555
         position: relative
-        box-shadow: inset 0 0 10px #18F158
+        //box-shadow: inset 0 0 10px #18F158
         &:before
           position: absolute
           z-index: 5
@@ -180,7 +257,6 @@ h1
   column-count:         5
   column-gap:           0px
   .image
-
 
     img
       width: 100% !important
